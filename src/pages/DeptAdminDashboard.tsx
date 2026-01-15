@@ -40,9 +40,9 @@ const DeptAdminDashboard = () => {
 
   const getStatusBadge = (status: string) => {
     const styles: Record<string, string> = {
-      active: 'bg-status-active/10 text-status-active border-status-active/30',
+      active: 'bg-success/10 text-success border-success/30',
       inactive: 'bg-muted text-muted-foreground border-muted',
-      pending: 'bg-status-warning/10 text-status-warning border-status-warning/30',
+      pending: 'bg-warning/10 text-warning border-warning/30',
     };
     return styles[status] || styles.pending;
   };
@@ -80,11 +80,11 @@ const DeptAdminDashboard = () => {
             <Card className="border-border/50">
               <CardContent className="p-4">
                 <div className="flex items-center gap-3">
-                  <div className="p-2 bg-status-active/10 rounded-lg">
-                    <Activity className="w-5 h-5 text-status-active" />
+                  <div className="p-2 bg-success/10 rounded-lg">
+                    <Activity className="w-5 h-5 text-success" />
                   </div>
                   <div>
-                    <p className="text-2xl font-bold text-status-active">
+                    <p className="text-2xl font-bold text-success">
                       {deptUsers.filter((u) => u.status === 'active').length}
                     </p>
                     <p className="text-xs text-muted-foreground">Active Users</p>
@@ -96,11 +96,11 @@ const DeptAdminDashboard = () => {
             <Card className="border-border/50">
               <CardContent className="p-4">
                 <div className="flex items-center gap-3">
-                  <div className="p-2 bg-status-warning/10 rounded-lg">
-                    <Users className="w-5 h-5 text-status-warning" />
+                  <div className="p-2 bg-warning/10 rounded-lg">
+                    <Users className="w-5 h-5 text-warning" />
                   </div>
                   <div>
-                    <p className="text-2xl font-bold text-status-warning">
+                    <p className="text-2xl font-bold text-warning">
                       {deptUsers.filter((u) => u.status === 'pending').length}
                     </p>
                     <p className="text-xs text-muted-foreground">Pending</p>

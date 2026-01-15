@@ -46,6 +46,11 @@
     --info: 199 89% 48%;
     --info-foreground: 0 0% 100%;
     
+    /* Status aliases for admin dashboards */
+    --status-active: 152 69% 45%;
+    --status-warning: 36 100% 50%;
+    --status-failed: 0 84% 60%;
+    
     /* Borders & inputs */
     --border: 225 40% 90%;
     --input: 225 40% 90%;
@@ -100,8 +105,16 @@
     --warning: 36 100% 45%;
     --warning-foreground: 0 0% 100%;
     
-    --destructive: 0 62% 30%;
-    --destructive-foreground: 210 40% 98%;
+    --destructive: 0 62% 50%;
+    --destructive-foreground: 0 0% 100%;
+    
+    --info: 199 89% 48%;
+    --info-foreground: 0 0% 100%;
+    
+    /* Status aliases for admin dashboards */
+    --status-active: 152 69% 40%;
+    --status-warning: 36 100% 45%;
+    --status-failed: 0 62% 50%;
     
     --border: 222 47% 20%;
     --input: 222 47% 20%;

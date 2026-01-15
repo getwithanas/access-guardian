@@ -46,19 +46,19 @@ const AdminDashboard = () => {
 
   const getStatusBadge = (status: string) => {
     const styles: Record<string, string> = {
-      active: 'bg-status-active/10 text-status-active border-status-active/30',
+      active: 'bg-success/10 text-success border-success/30',
       inactive: 'bg-muted text-muted-foreground border-muted',
-      pending: 'bg-status-warning/10 text-status-warning border-status-warning/30',
+      pending: 'bg-warning/10 text-warning border-warning/30',
     };
     return styles[status] || styles.pending;
   };
 
   const getLogTypeStyle = (type: string) => {
     const styles: Record<string, string> = {
-      success: 'bg-status-active/10 text-status-active',
+      success: 'bg-success/10 text-success',
       info: 'bg-primary/10 text-primary',
-      warning: 'bg-status-warning/10 text-status-warning',
-      error: 'bg-status-failed/10 text-status-failed',
+      warning: 'bg-warning/10 text-warning',
+      error: 'bg-destructive/10 text-destructive',
     };
     return styles[type] || styles.info;
   };
@@ -96,11 +96,11 @@ const AdminDashboard = () => {
             <Card className="border-border/50">
               <CardContent className="p-4">
                 <div className="flex items-center gap-3">
-                  <div className="p-2 bg-status-active/10 rounded-lg">
-                    <Activity className="w-5 h-5 text-status-active" />
+                  <div className="p-2 bg-success/10 rounded-lg">
+                    <Activity className="w-5 h-5 text-success" />
                   </div>
                   <div>
-                    <p className="text-2xl font-bold text-status-active">{systemStats?.activeUsers}</p>
+                    <p className="text-2xl font-bold text-success">{systemStats?.activeUsers}</p>
                     <p className="text-xs text-muted-foreground">Active Now</p>
                   </div>
                 </div>
@@ -138,11 +138,11 @@ const AdminDashboard = () => {
             <Card className="border-border/50">
               <CardContent className="p-4">
                 <div className="flex items-center gap-3">
-                  <div className="p-2 bg-status-warning/10 rounded-lg">
-                    <ClipboardCheck className="w-5 h-5 text-status-warning" />
+                  <div className="p-2 bg-warning/10 rounded-lg">
+                    <ClipboardCheck className="w-5 h-5 text-warning" />
                   </div>
                   <div>
-                    <p className="text-2xl font-bold text-status-warning">{systemStats?.pendingApprovals}</p>
+                    <p className="text-2xl font-bold text-warning">{systemStats?.pendingApprovals}</p>
                     <p className="text-xs text-muted-foreground">Pending</p>
                   </div>
                 </div>
@@ -152,11 +152,11 @@ const AdminDashboard = () => {
             <Card className="border-border/50">
               <CardContent className="p-4">
                 <div className="flex items-center gap-3">
-                  <div className="p-2 bg-status-active/10 rounded-lg">
-                    <Shield className="w-5 h-5 text-status-active" />
+                  <div className="p-2 bg-success/10 rounded-lg">
+                    <Shield className="w-5 h-5 text-success" />
                   </div>
                   <div>
-                    <p className="text-2xl font-bold text-status-active capitalize">{systemStats?.systemHealth}</p>
+                    <p className="text-2xl font-bold text-success capitalize">{systemStats?.systemHealth}</p>
                     <p className="text-xs text-muted-foreground">System Health</p>
                   </div>
                 </div>
@@ -189,7 +189,7 @@ const AdminDashboard = () => {
                         </p>
                       </div>
                       {dept.pendingTasks > 0 && (
-                        <Badge variant="secondary" className="bg-status-warning/10 text-status-warning">
+                        <Badge variant="secondary" className="bg-warning/10 text-warning">
                           {dept.pendingTasks} pending
                         </Badge>
                       )}

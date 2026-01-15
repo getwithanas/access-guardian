@@ -15,7 +15,7 @@ const CCTVGrid = () => {
         {cameras.map((camera) => (
           <div key={camera.id} className="relative">
             <div className="cctv-placeholder">
-              <span className="text-gray-500">Camera {camera.id}</span>
+              <img src="/security-camera.png" alt="CCTV Feed" className="w-full h-full object-cover rounded-lg opacity-50" />
             </div>
             
             <div className="absolute top-2 left-2 flex items-center gap-2">

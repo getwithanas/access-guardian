@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Search, Truck, User, Video } from 'lucide-react';
+import { Search, Truck, User, Video, MapPin } from 'lucide-react';
 import { currentVehicleMock } from '@/mocks/dashboard.mock';
 
 const VehicleVerificationForm = () => {
@@ -35,8 +35,8 @@ const VehicleVerificationForm = () => {
         </div>
         
         {/* Placeholder for camera view */}
-        <div className="cctv-placeholder h-40 mb-4">
-          <span className="text-gray-400">Camera Feed</span>
+        <div className="cctv-placeholder h-40 mb-4 relative overflow-hidden">
+          <img src="/security-camera.png" alt="CCTV Feed" className="w-full h-full object-cover rounded-lg opacity-50" />
         </div>
       </div>
 
@@ -147,8 +147,5 @@ const VehicleVerificationForm = () => {
     </div>
   );
 };
-
-// Adding missing import
-import { MapPin } from 'lucide-react';
 
 export default VehicleVerificationForm;

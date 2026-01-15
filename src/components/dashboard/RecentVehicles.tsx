@@ -1,4 +1,4 @@
-import { Truck, Clock, MapPin } from 'lucide-react';
+import { Truck, Clock } from 'lucide-react';
 import { recentVehiclesMock } from '@/mocks/dashboard.mock';
 
 const RecentVehicles = () => {
@@ -24,12 +24,13 @@ const RecentVehicles = () => {
                 {vehicle.time}
               </div>
             </div>
-            <div className="flex items-center gap-1 text-sm">
-              <MapPin className="w-4 h-4 text-destructive" />
-              <span className={vehicle.status === 'Entered' ? 'text-success' : 'text-muted-foreground'}>
-                {vehicle.status}
-              </span>
-            </div>
+            <span className={`text-xs px-2 py-1 rounded-full font-medium ${
+              vehicle.status === 'Entered' 
+                ? 'bg-success/10 text-success' 
+                : 'bg-muted text-muted-foreground'
+            }`}>
+              {vehicle.status}
+            </span>
           </div>
         ))}
       </div>
