@@ -4,7 +4,7 @@ import RecentVehicles from '@/components/dashboard/RecentVehicles';
 import VehicleVerificationForm from '@/components/dashboard/VehicleVerificationForm';
 import RecentAlerts from '@/components/dashboard/RecentAlerts';
 
-const Dashboard = () => {
+const SecurityDashboard = () => {
   return (
     <div className="min-h-screen bg-background">
       <Header title="Security Dashboard" showLive />
@@ -32,4 +32,4 @@ const Dashboard = () => {
   );
 };
 
-export default Dashboard;
+export default SecurityDashboard;

@@ -4,20 +4,36 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { AuthProvider, useAuth } from "@/context/AuthContext";
+import { getDefaultRouteForRole, UserRole } from "@/mocks/users.mock";
+
+// Pages
 import Login from "./pages/Login";
-import Dashboard from "./pages/Dashboard";
+import SecurityDashboard from "./pages/SecurityDashboard";
 import Weighbridge from "./pages/Weighbridge";
 import PurchaseDashboard from "./pages/PurchaseDashboard";
+import AdminDashboard from "./pages/AdminDashboard";
+import DeptAdminDashboard from "./pages/DeptAdminDashboard";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
 
-// Protected Route wrapper
-const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
-  const { isAuthenticated } = useAuth();
+// Protected Route wrapper with role-based access
+interface ProtectedRouteProps {
+  children: React.ReactNode;
+  allowedRoles?: UserRole[];
+}
+
+const ProtectedRoute = ({ children, allowedRoles }: ProtectedRouteProps) => {
+  const { isAuthenticated, user } = useAuth();
   
   if (!isAuthenticated) {
     return <Navigate to="/login" replace />;
+  }
+
+  // If roles are specified, check if user has permission
+  if (allowedRoles && user && !allowedRoles.includes(user.role)) {
+    // Redirect to their default dashboard
+    return <Navigate to={getDefaultRouteForRole(user.role)} replace />;
   }
   
   return <>{children}</>;
@@ -25,18 +41,30 @@ const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
 
 // Redirect authenticated users away from login
 const PublicRoute = ({ children }: { children: React.ReactNode }) => {
-  const { isAuthenticated } = useAuth();
+  const { isAuthenticated, user } = useAuth();
   
-  if (isAuthenticated) {
-    return <Navigate to="/dashboard" replace />;
+  if (isAuthenticated && user) {
+    return <Navigate to={getDefaultRouteForRole(user.role)} replace />;
   }
   
   return <>{children}</>;
 };
 
+// Auto-redirect to user's default dashboard
+const DashboardRedirect = () => {
+  const { isAuthenticated, user } = useAuth();
+  
+  if (!isAuthenticated || !user) {
+    return <Navigate to="/login" replace />;
+  }
+  
+  return <Navigate to={getDefaultRouteForRole(user.role)} replace />;
+};
+
 const AppRoutes = () => {
   return (
     <Routes>
+      {/* Public routes */}
       <Route path="/" element={<Navigate to="/login" replace />} />
       <Route
         path="/login"
@@ -46,31 +74,64 @@ const AppRoutes = () => {
           </PublicRoute>
         }
       />
+
+      {/* Dashboard redirect - sends user to their role-specific dashboard */}
       <Route
         path="/dashboard"
+        element={<DashboardRedirect />}
+      />
+
+      {/* Security Dashboard */}
+      <Route
+        path="/security"
         element={
-          <ProtectedRoute>
-            <Dashboard />
+          <ProtectedRoute allowedRoles={['security', 'super_admin']}>
+            <SecurityDashboard />
           </ProtectedRoute>
         }
       />
+
+      {/* Weighbridge Dashboard */}
       <Route
         path="/weighbridge"
         element={
-          <ProtectedRoute>
+          <ProtectedRoute allowedRoles={['weighbridge', 'super_admin']}>
             <Weighbridge />
           </ProtectedRoute>
         }
       />
+
+      {/* Purchase Dashboard */}
       <Route
         path="/purchase"
         element={
-          <ProtectedRoute>
+          <ProtectedRoute allowedRoles={['purchase', 'super_admin']}>
             <PurchaseDashboard />
           </ProtectedRoute>
         }
       />
-      {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+
+      {/* Department Admin Dashboard */}
+      <Route
+        path="/admin/department"
+        element={
+          <ProtectedRoute allowedRoles={['dept_admin', 'super_admin']}>
+            <DeptAdminDashboard />
+          </ProtectedRoute>
+        }
+      />
+
+      {/* Super Admin Dashboard */}
+      <Route
+        path="/admin"
+        element={
+          <ProtectedRoute allowedRoles={['super_admin']}>
+            <AdminDashboard />
+          </ProtectedRoute>
+        }
+      />
+
+      {/* Catch-all */}
       <Route path="*" element={<NotFound />} />
     </Routes>
   );

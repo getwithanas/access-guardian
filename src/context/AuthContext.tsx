@@ -1,17 +1,20 @@
 import { createContext, useContext, useState, useEffect, ReactNode } from 'react';
+import { findUserByCredentials, getDefaultRouteForRole, UserRole, roleConfig } from '@/mocks/users.mock';
 
 interface User {
   id: string;
   email: string;
   name: string;
-  role: 'admin' | 'security' | 'weighbridge' | 'purchase';
+  role: UserRole;
+  department?: string;
 }
 
 interface AuthContextType {
   user: User | null;
   isAuthenticated: boolean;
-  login: (email: string, password: string) => Promise<boolean>;
+  login: (email: string, password: string) => Promise<{ success: boolean; redirectTo: string }>;
   logout: () => void;
+  getRoleLabel: () => string;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -27,21 +30,32 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     }
   }, []);
 
-  const login = async (email: string, password: string): Promise<boolean> => {
-    // Mock login - in production, this would call the API
-    if (email && password) {
-      const mockUser: User = {
-        id: '1',
-        email,
-        name: email.split('@')[0].charAt(0).toUpperCase() + email.split('@')[0].slice(1),
-        role: 'security'
+  const login = async (email: string, password: string): Promise<{ success: boolean; redirectTo: string }> => {
+    // Simulate API delay
+    await new Promise((resolve) => setTimeout(resolve, 500));
+
+    const foundUser = findUserByCredentials(email, password);
+    
+    if (foundUser) {
+      const authUser: User = {
+        id: foundUser.id,
+        email: foundUser.email,
+        name: foundUser.name,
+        role: foundUser.role,
+        department: foundUser.department,
       };
-      setUser(mockUser);
-      localStorage.setItem('acwms_user', JSON.stringify(mockUser));
-      localStorage.setItem('acwms_token', 'mock_jwt_token');
-      return true;
+      
+      setUser(authUser);
+      localStorage.setItem('acwms_user', JSON.stringify(authUser));
+      localStorage.setItem('acwms_token', `mock_jwt_token_${foundUser.id}`);
+      
+      return {
+        success: true,
+        redirectTo: getDefaultRouteForRole(foundUser.role),
+      };
     }
-    return false;
+    
+    return { success: false, redirectTo: '/login' };
   };
 
   const logout = () => {
@@ -50,8 +64,13 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     localStorage.removeItem('acwms_token');
   };
 
+  const getRoleLabel = (): string => {
+    if (!user) return '';
+    return roleConfig[user.role]?.label || user.role;
+  };
+
   return (
-    <AuthContext.Provider value={{ user, isAuthenticated: !!user, login, logout }}>
+    <AuthContext.Provider value={{ user, isAuthenticated: !!user, login, logout, getRoleLabel }}>
       {children}
     </AuthContext.Provider>
   );
