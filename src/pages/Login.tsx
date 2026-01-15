@@ -1,15 +1,17 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '@/context/AuthContext';
-import { Mail, Lock, Eye, EyeOff } from 'lucide-react';
+import { Eye, EyeOff, Info } from 'lucide-react';
+import { mockUsers, roleConfig } from '@/mocks/users.mock';
 
 const Login = () => {
-  const [email, setEmail] = useState('hakeem@digital.com');
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [rememberMe, setRememberMe] = useState(false);
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
+  const [showCredentials, setShowCredentials] = useState(false);
 
   const { login } = useAuth();
   const navigate = useNavigate();
@@ -20,17 +22,22 @@ const Login = () => {
     setLoading(true);
 
     try {
-      const success = await login(email, password);
-      if (success) {
-        navigate('/dashboard');
+      const result = await login(email, password);
+      if (result.success) {
+        navigate(result.redirectTo);
       } else {
-        setError('Invalid credentials');
+        setError('Invalid email or password');
       }
     } catch {
       setError('Login failed. Please try again.');
     } finally {
       setLoading(false);
     }
+  };
+
+  const handleQuickLogin = (userEmail: string, userPassword: string) => {
+    setEmail(userEmail);
+    setPassword(userPassword);
   };
 
   return (
@@ -126,6 +133,44 @@ const Login = () => {
               {loading ? 'Logging in...' : 'Login'}
             </button>
           </form>
+
+          {/* Demo Credentials Toggle */}
+          <div className="mt-8">
+            <button
+              type="button"
+              onClick={() => setShowCredentials(!showCredentials)}
+              className="flex items-center gap-2 text-sm text-muted-foreground hover:text-primary transition-colors"
+            >
+              <Info className="w-4 h-4" />
+              {showCredentials ? 'Hide' : 'Show'} Demo Credentials
+            </button>
+
+            {showCredentials && (
+              <div className="mt-4 p-4 bg-muted/50 rounded-lg border border-border">
+                <p className="text-xs text-muted-foreground mb-3">Click to autofill credentials:</p>
+                <div className="space-y-2">
+                  {mockUsers.map((user) => (
+                    <button
+                      key={user.id}
+                      type="button"
+                      onClick={() => handleQuickLogin(user.email, user.password)}
+                      className="w-full text-left p-2 rounded hover:bg-primary/10 transition-colors group"
+                    >
+                      <div className="flex items-center justify-between">
+                        <div>
+                          <span className="text-sm font-medium text-foreground group-hover:text-primary">
+                            {roleConfig[user.role].label}
+                          </span>
+                          <p className="text-xs text-muted-foreground">{user.email}</p>
+                        </div>
+                        <span className="text-xs text-muted-foreground">{user.password}</span>
+                      </div>
+                    </button>
+                  ))}
+                </div>
+              </div>
+            )}
+          </div>
         </div>
       </div>
 
@@ -133,7 +178,7 @@ const Login = () => {
       <div className="hidden lg:flex w-1/2 items-center justify-center bg-background p-12">
         <div className="relative">
           <img
-            src="/public/security-camera.png"
+            src="/security-camera.png"
             alt="Security camera illustration"
             className="w-[26rem] h-[26rem] xl:w-[32rem] xl:h-[32rem] object-contain"
           />
@@ -144,5 +189,3 @@ const Login = () => {
 };
 
 export default Login;
-
-// test change
