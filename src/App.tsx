@@ -4,7 +4,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { AuthProvider, useAuth } from "@/context/AuthContext";
-import { getDefaultRouteForRole, UserRole } from "@/mocks/users.mock";
+import { getDefaultRouteForRole, StaffRole } from "@/types/staff.types";
 
 // Pages
 import Login from "./pages/Login";
@@ -20,7 +20,7 @@ const queryClient = new QueryClient();
 // Protected Route wrapper with role-based access
 interface ProtectedRouteProps {
   children: React.ReactNode;
-  allowedRoles?: UserRole[];
+  allowedRoles?: StaffRole[];
 }
 
 const ProtectedRoute = ({ children, allowedRoles }: ProtectedRouteProps) => {
@@ -85,7 +85,7 @@ const AppRoutes = () => {
       <Route
         path="/security"
         element={
-          <ProtectedRoute allowedRoles={['security', 'super_admin']}>
+          <ProtectedRoute allowedRoles={['security', 'super admin']}>
             <SecurityDashboard />
           </ProtectedRoute>
         }
@@ -95,7 +95,7 @@ const AppRoutes = () => {
       <Route
         path="/weighbridge"
         element={
-          <ProtectedRoute allowedRoles={['weighbridge', 'super_admin']}>
+          <ProtectedRoute allowedRoles={['weighbridge', 'super admin']}>
             <Weighbridge />
           </ProtectedRoute>
         }
@@ -105,7 +105,7 @@ const AppRoutes = () => {
       <Route
         path="/purchase"
         element={
-          <ProtectedRoute allowedRoles={['purchase', 'super_admin']}>
+          <ProtectedRoute allowedRoles={['purchase', 'super admin']}>
             <PurchaseDashboard />
           </ProtectedRoute>
         }
@@ -115,7 +115,7 @@ const AppRoutes = () => {
       <Route
         path="/admin/department"
         element={
-          <ProtectedRoute allowedRoles={['dept_admin', 'super_admin']}>
+          <ProtectedRoute allowedRoles={['dept admin', 'super admin']}>
             <DeptAdminDashboard />
           </ProtectedRoute>
         }
@@ -125,7 +125,7 @@ const AppRoutes = () => {
       <Route
         path="/admin"
         element={
-          <ProtectedRoute allowedRoles={['super_admin']}>
+          <ProtectedRoute allowedRoles={['super admin']}>
             <AdminDashboard />
           </ProtectedRoute>
         }
