@@ -11,16 +11,17 @@ import { Eye, EyeOff, Info } from 'lucide-react';
 import { roleConfig, StaffRole } from '@/types/staff.types';
 
 // Demo credentials for quick testing (remove in production)
+// These should match your backend seeded users
 const demoCredentials: Array<{
   username: string;
   password: string;
   role: StaffRole;
 }> = [
-  { username: 'security@acwms.com', password: 'security123', role: 'security' },
-  { username: 'purchase@acwms.com', password: 'purchase123', role: 'purchase' },
-  { username: 'weighbridge@acwms.com', password: 'weighbridge123', role: 'weighbridge' },
-  { username: 'deptadmin@acwms.com', password: 'deptadmin123', role: 'dept admin' },
-  { username: 'superadmin@acwms.com', password: 'superadmin123', role: 'super admin' },
+  { username: 'security', password: 'security123', role: 'security' },
+  { username: 'purchase', password: 'purchase123', role: 'purchase' },
+  { username: 'weighbridge', password: 'weighbridge123', role: 'weighbridge' },
+  { username: 'deptadmin', password: 'deptadmin123', role: 'dept admin' },
+  { username: 'superadmin', password: 'superadmin123', role: 'super admin' },
 ];
 
 const Login = () => {
