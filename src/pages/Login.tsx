@@ -1,14 +1,36 @@
+/**
+ * Login Page
+ * Handles user authentication with username/password
+ * Shows demo credentials for testing
+ */
+
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '@/context/AuthContext';
 import { Eye, EyeOff, Info } from 'lucide-react';
-import { mockUsers, roleConfig } from '@/mocks/users.mock';
+import { roleConfig, StaffRole } from '@/types/staff.types';
+
+// Demo credentials for quick testing (remove in production)
+const demoCredentials: Array<{
+  username: string;
+  password: string;
+  role: StaffRole;
+}> = [
+  { username: 'security@acwms.com', password: 'security123', role: 'security' },
+  { username: 'purchase@acwms.com', password: 'purchase123', role: 'purchase' },
+  { username: 'weighbridge@acwms.com', password: 'weighbridge123', role: 'weighbridge' },
+  { username: 'deptadmin@acwms.com', password: 'deptadmin123', role: 'dept admin' },
+  { username: 'superadmin@acwms.com', password: 'superadmin123', role: 'super admin' },
+];
 
 const Login = () => {
-  const [email, setEmail] = useState('');
+  // Form state
+  const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [rememberMe, setRememberMe] = useState(false);
+  
+  // UI state
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const [showCredentials, setShowCredentials] = useState(false);
@@ -16,17 +38,20 @@ const Login = () => {
   const { login } = useAuth();
   const navigate = useNavigate();
 
+  /**
+   * Handle form submission
+   */
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
     setLoading(true);
 
     try {
-      const result = await login(email, password);
+      const result = await login(username, password);
       if (result.success) {
         navigate(result.redirectTo);
       } else {
-        setError('Invalid email or password');
+        setError(result.error || 'Invalid username or password');
       }
     } catch {
       setError('Login failed. Please try again.');
@@ -35,9 +60,12 @@ const Login = () => {
     }
   };
 
-  const handleQuickLogin = (userEmail: string, userPassword: string) => {
-    setEmail(userEmail);
-    setPassword(userPassword);
+  /**
+   * Autofill credentials for demo purposes
+   */
+  const handleQuickLogin = (demoUsername: string, demoPassword: string) => {
+    setUsername(demoUsername);
+    setPassword(demoPassword);
   };
 
   return (
@@ -69,34 +97,41 @@ const Login = () => {
 
           {/* Login Form */}
           <form onSubmit={handleSubmit} className="space-y-6">
+            {/* Error Message */}
             {error && (
               <div className="p-3 bg-destructive/10 border border-destructive/30 rounded-lg text-destructive text-sm">
                 {error}
               </div>
             )}
 
+            {/* Username Field */}
             <div>
-              <label className="block text-sm text-muted-foreground mb-2">Email Address</label>
+              <label className="block text-sm text-muted-foreground mb-2">
+                Username / Email
+              </label>
               <div className="relative">
                 <input
-                  type="email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  className="w-full px-4 py-3 border-b-2 border-border bg-transparent focus:outline-none focus:border-primary text-primary font-medium"
-                  placeholder="Enter your email"
+                  type="text"
+                  value={username}
+                  onChange={(e) => setUsername(e.target.value)}
+                  className="w-full px-4 py-3 border-b-2 border-border bg-transparent focus:outline-none focus:border-primary text-foreground font-medium"
+                  placeholder="Enter your username"
                   required
                 />
               </div>
             </div>
 
+            {/* Password Field */}
             <div>
-              <label className="block text-sm text-muted-foreground mb-2">Password</label>
+              <label className="block text-sm text-muted-foreground mb-2">
+                Password
+              </label>
               <div className="relative">
                 <input
                   type={showPassword ? 'text' : 'password'}
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  className="w-full px-4 py-3 border-b-2 border-border bg-transparent focus:outline-none focus:border-primary"
+                  className="w-full px-4 py-3 border-b-2 border-border bg-transparent focus:outline-none focus:border-primary text-foreground"
                   placeholder="Enter your password"
                   required
                 />
@@ -105,11 +140,16 @@ const Login = () => {
                   onClick={() => setShowPassword(!showPassword)}
                   className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
                 >
-                  {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
+                  {showPassword ? (
+                    <EyeOff className="w-5 h-5" />
+                  ) : (
+                    <Eye className="w-5 h-5" />
+                  )}
                 </button>
               </div>
             </div>
 
+            {/* Remember Me & Forgot Password */}
             <div className="flex items-center justify-between">
               <label className="flex items-center gap-2 cursor-pointer">
                 <input
@@ -120,11 +160,15 @@ const Login = () => {
                 />
                 <span className="text-sm text-muted-foreground">Remember Me</span>
               </label>
-              <button type="button" className="text-sm text-muted-foreground hover:text-primary">
+              <button
+                type="button"
+                className="text-sm text-muted-foreground hover:text-primary"
+              >
                 Forgot Password?
               </button>
             </div>
 
+            {/* Submit Button */}
             <button
               type="submit"
               disabled={loading}
@@ -145,25 +189,32 @@ const Login = () => {
               {showCredentials ? 'Hide' : 'Show'} Demo Credentials
             </button>
 
+            {/* Demo Credentials List */}
             {showCredentials && (
               <div className="mt-4 p-4 bg-muted/50 rounded-lg border border-border">
-                <p className="text-xs text-muted-foreground mb-3">Click to autofill credentials:</p>
+                <p className="text-xs text-muted-foreground mb-3">
+                  Click to autofill credentials:
+                </p>
                 <div className="space-y-2">
-                  {mockUsers.map((user) => (
+                  {demoCredentials.map((cred) => (
                     <button
-                      key={user.id}
+                      key={cred.username}
                       type="button"
-                      onClick={() => handleQuickLogin(user.email, user.password)}
+                      onClick={() => handleQuickLogin(cred.username, cred.password)}
                       className="w-full text-left p-2 rounded hover:bg-primary/10 transition-colors group"
                     >
                       <div className="flex items-center justify-between">
                         <div>
                           <span className="text-sm font-medium text-foreground group-hover:text-primary">
-                            {roleConfig[user.role].label}
+                            {roleConfig[cred.role].label}
                           </span>
-                          <p className="text-xs text-muted-foreground">{user.email}</p>
+                          <p className="text-xs text-muted-foreground">
+                            {cred.username}
+                          </p>
                         </div>
-                        <span className="text-xs text-muted-foreground">{user.password}</span>
+                        <span className="text-xs text-muted-foreground">
+                          {cred.password}
+                        </span>
                       </div>
                     </button>
                   ))}

@@ -51,7 +51,7 @@ const Header = ({ title, subtitle, showLive = false }: HeaderProps) => {
             <User className="w-4 h-4" />
             <div className="flex flex-col">
               <span className="text-xs opacity-80">Logged in as</span>
-              <span className="text-sm font-semibold">{user.name}</span>
+              <span className="text-sm font-semibold">{user.full_name || user.name}</span>
             </div>
           </div>
         )}
