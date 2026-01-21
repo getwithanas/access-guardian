@@ -142,7 +142,7 @@ const Login = () => {
                   type="text"
                   value={username}
                   onChange={(e) => setUsername(e.target.value)}
-                  className="w-full px-4 py-3 border-b-2 border-border bg-transparent focus:outline-none focus:border-primary text-foreground font-medium"
+                  className="w-full px-4 py-3 border-b-2 border-border bg-transparent focus:outline-none focus:border-primary text-foreground font-medium transition-all duration-300 hover:border-primary/50 focus:translate-x-1"
                   placeholder="Enter your username"
                   required
                 />
@@ -159,14 +159,14 @@ const Login = () => {
                   type={showPassword ? 'text' : 'password'}
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  className="w-full px-4 py-3 border-b-2 border-border bg-transparent focus:outline-none focus:border-primary text-foreground"
+                  className="w-full px-4 py-3 border-b-2 border-border bg-transparent focus:outline-none focus:border-primary text-foreground transition-all duration-300 hover:border-primary/50 focus:translate-x-1"
                   placeholder="Enter your password"
                   required
                 />
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-primary transition-all duration-200 hover:scale-110"
                 >
                   {showPassword ? (
                     <EyeOff className="w-5 h-5" />
@@ -190,7 +190,7 @@ const Login = () => {
               </label>
               <button
                 type="button"
-                className="text-sm text-muted-foreground hover:text-primary"
+                className="text-sm text-muted-foreground hover:text-primary transition-all duration-200 hover:translate-x-1"
               >
                 Forgot Password?
               </button>
@@ -200,7 +200,7 @@ const Login = () => {
             <button
               type="submit"
               disabled={loading}
-              className="w-32 py-3 bg-primary text-primary-foreground rounded-lg font-semibold hover:opacity-90 transition-opacity disabled:opacity-50"
+              className="w-32 py-3 bg-primary text-primary-foreground rounded-lg font-semibold transition-all duration-300 hover:shadow-lg hover:shadow-primary/30 hover:scale-105 active:scale-95 disabled:opacity-50 disabled:hover:scale-100 disabled:hover:shadow-none"
             >
               {loading ? 'Logging in...' : 'Login'}
             </button>
