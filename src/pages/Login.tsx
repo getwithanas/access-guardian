@@ -95,10 +95,37 @@ const Login = () => {
       </div>
 
       {/* Top Navbar */}
-      <nav className="w-full h-16 border-b border-border bg-card/50 backdrop-blur-sm flex items-center px-8 lg:px-12 fixed top-0 left-0 right-0 z-50">
-        <h1 className="text-2xl font-bold text-primary underline decoration-2 underline-offset-4">
-          ACWMS
-        </h1>
+      <nav className="w-full h-14 md:h-16 lg:h-18 border-b border-border/50 bg-card/80 backdrop-blur-md flex items-center justify-between px-4 sm:px-6 md:px-8 lg:px-16 xl:px-24 fixed top-0 left-0 right-0 z-50 shadow-sm">
+        {/* Logo */}
+        <div className="flex items-center gap-3">
+          <div className="w-8 h-8 md:w-10 md:h-10 rounded-lg bg-primary/10 flex items-center justify-center">
+            <span className="text-primary font-bold text-sm md:text-base">AC</span>
+          </div>
+          <h1 className="text-lg sm:text-xl md:text-2xl font-bold text-primary">
+            ACWMS
+          </h1>
+        </div>
+
+        {/* Desktop Navigation Links */}
+        <div className="hidden md:flex items-center gap-6 lg:gap-8">
+          <span className="text-sm text-muted-foreground hover:text-primary transition-colors cursor-pointer">
+            About
+          </span>
+          <span className="text-sm text-muted-foreground hover:text-primary transition-colors cursor-pointer">
+            Contact
+          </span>
+          <span className="text-sm text-muted-foreground hover:text-primary transition-colors cursor-pointer">
+            Help
+          </span>
+        </div>
+
+        {/* Right side - Status indicator */}
+        <div className="flex items-center gap-2">
+          <div className="hidden sm:flex items-center gap-2 px-3 py-1.5 rounded-full bg-success/10 border border-success/20">
+            <div className="w-2 h-2 rounded-full bg-success animate-pulse" />
+            <span className="text-xs text-success font-medium">System Online</span>
+          </div>
+        </div>
       </nav>
 
       {/* Main Content */}
