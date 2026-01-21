@@ -70,7 +70,7 @@ const Login = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background flex flex-col relative overflow-hidden">
+    <div className="min-h-screen bg-gradient-to-br from-background via-background to-primary/5 flex flex-col relative overflow-hidden">
       {/* Decorative Blue Stripes */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
         {/* Top-right diagonal stripes */}
