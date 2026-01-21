@@ -70,7 +70,30 @@ const Login = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background flex flex-col">
+    <div className="min-h-screen bg-background flex flex-col relative overflow-hidden">
+      {/* Decorative Blue Stripes */}
+      <div className="absolute inset-0 pointer-events-none overflow-hidden">
+        {/* Top-right diagonal stripes */}
+        <div className="absolute -top-20 -right-20 w-96 h-96 rotate-12">
+          <div className="w-full h-4 bg-primary/20 mb-6 rounded-full animate-fade-in" />
+          <div className="w-3/4 h-3 bg-primary/15 mb-5 rounded-full animate-fade-in" style={{ animationDelay: '0.1s' }} />
+          <div className="w-1/2 h-2 bg-primary/10 rounded-full animate-fade-in" style={{ animationDelay: '0.2s' }} />
+        </div>
+        
+        {/* Bottom-left diagonal stripes */}
+        <div className="absolute -bottom-10 -left-20 w-80 h-80 -rotate-12">
+          <div className="w-full h-3 bg-primary/15 mb-5 rounded-full animate-fade-in" style={{ animationDelay: '0.3s' }} />
+          <div className="w-2/3 h-2 bg-primary/10 mb-4 rounded-full animate-fade-in" style={{ animationDelay: '0.4s' }} />
+          <div className="w-1/3 h-2 bg-primary/5 rounded-full animate-fade-in" style={{ animationDelay: '0.5s' }} />
+        </div>
+
+        {/* Center-right accent stripe */}
+        <div className="absolute top-1/3 -right-10 w-64 h-1 bg-gradient-to-l from-primary/30 to-transparent rounded-full animate-fade-in" style={{ animationDelay: '0.6s' }} />
+        
+        {/* Center-left accent stripe */}
+        <div className="absolute top-2/3 -left-10 w-48 h-1 bg-gradient-to-r from-primary/25 to-transparent rounded-full animate-fade-in" style={{ animationDelay: '0.7s' }} />
+      </div>
+
       {/* Top Navbar */}
       <nav className="w-full h-16 border-b border-border bg-card/50 backdrop-blur-sm flex items-center px-8 lg:px-12 fixed top-0 left-0 right-0 z-50">
         <h1 className="text-2xl font-bold text-primary underline decoration-2 underline-offset-4">
@@ -79,7 +102,7 @@ const Login = () => {
       </nav>
 
       {/* Main Content */}
-      <div className="flex flex-1 pt-16">
+      <div className="flex flex-1 pt-16 relative z-10">
         {/* Left Side - Login Form */}
         <div className="w-full lg:w-1/2 flex flex-col justify-center px-8 lg:px-20">
           <div className="max-w-md mx-auto w-full">
