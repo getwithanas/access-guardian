@@ -71,29 +71,6 @@ const Login = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-background via-background to-primary/5 flex flex-col relative overflow-hidden">
-      {/* Decorative Blue Stripes */}
-      <div className="absolute inset-0 pointer-events-none overflow-hidden">
-        {/* Top-right diagonal stripes */}
-        <div className="absolute -top-20 -right-20 w-96 h-96 rotate-12">
-          <div className="w-full h-4 bg-primary/20 mb-6 rounded-full animate-fade-in" />
-          <div className="w-3/4 h-3 bg-primary/15 mb-5 rounded-full animate-fade-in" style={{ animationDelay: '0.1s' }} />
-          <div className="w-1/2 h-2 bg-primary/10 rounded-full animate-fade-in" style={{ animationDelay: '0.2s' }} />
-        </div>
-        
-        {/* Bottom-left diagonal stripes */}
-        <div className="absolute -bottom-10 -left-20 w-80 h-80 -rotate-12">
-          <div className="w-full h-3 bg-primary/15 mb-5 rounded-full animate-fade-in" style={{ animationDelay: '0.3s' }} />
-          <div className="w-2/3 h-2 bg-primary/10 mb-4 rounded-full animate-fade-in" style={{ animationDelay: '0.4s' }} />
-          <div className="w-1/3 h-2 bg-primary/5 rounded-full animate-fade-in" style={{ animationDelay: '0.5s' }} />
-        </div>
-
-        {/* Center-right accent stripe */}
-        <div className="absolute top-1/3 -right-10 w-64 h-1 bg-gradient-to-l from-primary/30 to-transparent rounded-full animate-fade-in" style={{ animationDelay: '0.6s' }} />
-        
-        {/* Center-left accent stripe */}
-        <div className="absolute top-2/3 -left-10 w-48 h-1 bg-gradient-to-r from-primary/25 to-transparent rounded-full animate-fade-in" style={{ animationDelay: '0.7s' }} />
-      </div>
-
       {/* Top Navbar */}
       <nav className="w-full h-14 md:h-16 lg:h-18 border-b border-border/50 bg-card/80 backdrop-blur-md flex items-center justify-between px-4 sm:px-6 md:px-8 lg:px-16 xl:px-24 fixed top-0 left-0 right-0 z-50 shadow-sm">
         {/* Logo */}
@@ -109,22 +86,17 @@ const Login = () => {
         {/* Desktop Navigation Links */}
         <div className="hidden md:flex items-center gap-6 lg:gap-8">
           <span className="text-sm text-muted-foreground hover:text-primary transition-colors cursor-pointer">
-            About
+            Home
           </span>
           <span className="text-sm text-muted-foreground hover:text-primary transition-colors cursor-pointer">
-            Contact
+            Features
           </span>
           <span className="text-sm text-muted-foreground hover:text-primary transition-colors cursor-pointer">
-            Help
+            Support
           </span>
-        </div>
-
-        {/* Right side - Status indicator */}
-        <div className="flex items-center gap-2">
-          <div className="hidden sm:flex items-center gap-2 px-3 py-1.5 rounded-full bg-success/10 border border-success/20">
-            <div className="w-2 h-2 rounded-full bg-success animate-pulse" />
-            <span className="text-xs text-success font-medium">System Online</span>
-          </div>
+          <span className="text-sm font-medium text-primary cursor-pointer">
+            Login
+          </span>
         </div>
       </nav>
 
