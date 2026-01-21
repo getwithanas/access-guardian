@@ -70,16 +70,20 @@ const Login = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background flex">
-      {/* Left Side - Login Form */}
-      <div className="w-full lg:w-1/2 flex flex-col justify-center px-8 lg:px-20">
-        <div className="max-w-md mx-auto w-full">
-          {/* Logo */}
-          <h1 className="text-3xl font-bold text-primary mb-12 underline decoration-2 underline-offset-4">
-            ACWMS
-          </h1>
+    <div className="min-h-screen bg-background flex flex-col">
+      {/* Top Navbar */}
+      <nav className="w-full h-16 border-b border-border bg-card/50 backdrop-blur-sm flex items-center px-8 lg:px-12 fixed top-0 left-0 right-0 z-50">
+        <h1 className="text-2xl font-bold text-primary underline decoration-2 underline-offset-4">
+          ACWMS
+        </h1>
+      </nav>
 
-          {/* Title */}
+      {/* Main Content */}
+      <div className="flex flex-1 pt-16">
+        {/* Left Side - Login Form */}
+        <div className="w-full lg:w-1/2 flex flex-col justify-center px-8 lg:px-20">
+          <div className="max-w-md mx-auto w-full">
+            {/* Title */}
           <div className="mb-8">
             <h2 className="text-2xl lg:text-3xl font-bold text-primary mb-2">
               Access Control &
@@ -223,17 +227,18 @@ const Login = () => {
               </div>
             )}
           </div>
+          </div>
         </div>
-      </div>
 
-      {/* Right Side - Illustration */}
-      <div className="hidden lg:flex w-1/2 items-center justify-center bg-background p-12">
-        <div className="relative">
-          <img
-            src="/security-camera.png"
-            alt="Security camera illustration"
-            className="w-[26rem] h-[26rem] xl:w-[32rem] xl:h-[32rem] object-contain"
-          />
+        {/* Right Side - Illustration */}
+        <div className="hidden lg:flex w-1/2 items-center justify-center bg-background p-12">
+          <div className="relative">
+            <img
+              src="/security-camera.png"
+              alt="Security camera illustration"
+              className="w-[26rem] h-[26rem] xl:w-[32rem] xl:h-[32rem] object-contain"
+            />
+          </div>
         </div>
       </div>
     </div>
